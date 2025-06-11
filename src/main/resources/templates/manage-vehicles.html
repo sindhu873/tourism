@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Vehicles</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h1>Manage Vehicles</h1>
+    <nav>
+        <ul>
+            <li><a href="/admin/dashboard">Admin Dashboard</a></li>
+            <li><a href="/admin/hotels">Manage Hotels</a></li>
+            <li><a href="/admin/packages">Manage Packages</a></li>
+            <li><a href="/admin/users">Manage Users</a></li>
+            <li><a href="/admin/orders">Manage Orders</a></li>
+            <li><a href="/admin/vehicles">Manage Vehicles</a></li>
+            <li><a href="/admin/foods">Manage Foods</a></li>
+            <li><a href="/admin/transports">Manage Transports</a></li>
+        </ul>
+    </nav>
+
+    <h2>Add New Vehicle</h2>
+    <form th:action="@{/admin/vehicles/add}" th:object="${vehicle}" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" required><br>
+
+        <label for="type">Type:</label>
+        <input type="text" id="type" th:field="*{type}" required><br>
+
+        <label for="licensePlate">License Plate:</label>
+        <input type="text" id="licensePlate" th:field="*{licensePlate}"><br>
+
+        <label for="capacity">Capacity:</label>
+        <input type="number" id="capacity" th:field="*{capacity}" required><br>
+
+        <label for="rentalPricePerDay">Rental Price Per Day:</label>
+        <input type="number" id="rentalPricePerDay" th:field="*{rentalPricePerDay}" step="0.01" required><br>
+
+        <button type="submit">Add Vehicle</button>
+    </form>
+
+    <h2>Existing Vehicles</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>License Plate</th>
+                <th>Capacity</th>
+                <th>Rental Price Per Day</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="vehicle : ${vehicles}">
+                <td th:text="${vehicle.id}"></td>
+                <td th:text="${vehicle.name}"></td>
+                <td th:text="${vehicle.type}"></td>
+                <td th:text="${vehicle.licensePlate}"></td>
+                <td th:text="${vehicle.capacity}"></td>
+                <td th:text="${vehicle.rentalPricePerDay}"></td>
+                <td>
+                    <a th:href="@{/admin/vehicles/delete/{id}(id=${vehicle.id})}">Delete</a>
+                    <!-- Add an edit link/form here later -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html> 
