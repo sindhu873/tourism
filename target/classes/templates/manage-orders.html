@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Orders</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h1>Manage Orders</h1>
+    <nav>
+        <ul>
+            <li><a href="/admin/dashboard">Admin Dashboard</a></li>
+            <li><a href="/admin/hotels">Manage Hotels</a></li>
+            <li><a href="/admin/packages">Manage Packages</a></li>
+            <li><a href="/admin/users">Manage Users</a></li>
+            <li><a href="/admin/orders">Manage Orders</a></li>
+        </ul>
+    </nav>
+
+    <h2>Existing Orders</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Package</th>
+                <th>Order Date</th>
+                <th>Total Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.user.username}"></td>
+                <td th:text="${order.tourismPackage.name}"></td>
+                <td th:text="${order.orderDate}"></td>
+                <td th:text="${order.totalPrice}"></td>
+                <td th:text="${order.status}"></td>
+                <td>
+                    <a th:href="@{/admin/orders/delete/{id}(id=${order.id})}">Delete</a>
+                    <!-- Add an edit link/form here later -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html> 

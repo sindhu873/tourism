@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Packages</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h1>Available Tourism Packages</h1>
+    <nav>
+        <ul>
+            <li><a href="/user/dashboard">User Dashboard</a></li>
+            <li><a href="/user/packages">View Packages</a></li>
+            <li><a href="/user/orders">View My Orders</a></li>
+            <li><a href="/">Back to Home</a></li>
+        </ul>
+    </nav>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Duration (Days)</th>
+                <th>Hotels Included</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="tourismPackage : ${packages}">
+                <td th:text="${tourismPackage.id}"></td>
+                <td th:text="${tourismPackage.name}"></td>
+                <td th:text="${tourismPackage.description}"></td>
+                <td th:text="${tourismPackage.price}"></td>
+                <td th:text="${tourismPackage.durationDays}"></td>
+                <td>
+                    <span th:each="hotel : ${tourismPackage.hotels}" th:text="${hotel.name + ' '}"></span>
+                </td>
+                <td>
+                    <a th:href="@{/user/package/book/{id}(id=${tourismPackage.id})}">Book Now</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html> 

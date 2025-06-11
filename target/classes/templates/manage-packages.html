@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Packages</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h1>Manage Packages</h1>
+    <nav>
+        <ul>
+            <li><a href="/admin/dashboard">Admin Dashboard</a></li>
+            <li><a href="/admin/hotels">Manage Hotels</a></li>
+            <li><a href="/admin/packages">Manage Packages</a></li>
+            <li><a href="/admin/users">Manage Users</a></li>
+            <li><a href="/admin/orders">Manage Orders</a></li>
+        </ul>
+    </nav>
+
+    <h2>Add New Package</h2>
+    <form th:action="@{/admin/packages/add}" th:object="${package}" method="post">
+        <label for="packageName">Name:</label>
+        <input type="text" id="packageName" th:field="*{name}" required><br>
+
+        <label for="packageDescription">Description:</label>
+        <textarea id="packageDescription" th:field="*{description}"></textarea><br>
+
+        <label for="packagePrice">Price:</label>
+        <input type="number" id="packagePrice" th:field="*{price}" step="0.01" required><br>
+
+        <label for="durationDays">Duration (Days):</label>
+        <input type="number" id="durationDays" th:field="*{durationDays}" required><br>
+
+        <h3>Select Hotels for Package:</h3>
+        <div th:each="hotel : ${hotels}">
+            <input type="checkbox" th:id="${'hotel_' + hotel.id}" th:name="hotels" th:value="${hotel.id}">
+            <label th:for="${'hotel_' + hotel.id}" th:text="${hotel.name + ' (' + hotel.city + ')'}"></label><br>
+        </div>
+
+        <button type="submit">Add Package</button>
+    </form>
+
+    <h2>Existing Packages</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Duration (Days)</th>
+                <th>Hotels Included</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="tourismPackage : ${packages}">
+                <td th:text="${tourismPackage.id}"></td>
+                <td th:text="${tourismPackage.name}"></td>
+                <td th:text="${tourismPackage.description}"></td>
+                <td th:text="${tourismPackage.price}"></td>
+                <td th:text="${tourismPackage.durationDays}"></td>
+                <td>
+                    <span th:each="hotel : ${tourismPackage.hotels}" th:text="${hotel.name + ' '}"></span>
+                </td>
+                <td>
+                    <a th:href="@{/admin/packages/delete/{id}(id=${tourismPackage.id})}">Delete</a>
+                    <!-- Add an edit link/form here later -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html> 

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Hotels</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h1>Manage Hotels</h1>
+    <nav>
+        <ul>
+            <li><a href="/admin/dashboard">Admin Dashboard</a></li>
+            <li><a href="/admin/hotels">Manage Hotels</a></li>
+            <li><a href="/admin/packages">Manage Packages</a></li>
+            <li><a href="/admin/users">Manage Users</a></li>
+            <li><a href="/admin/orders">Manage Orders</a></li>
+        </ul>
+    </nav>
+
+    <h2>Add New Hotel</h2>
+    <form th:action="@{/admin/hotels/add}" th:object="${hotel}" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" required><br>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" th:field="*{address}" required><br>
+
+        <label for="city">City:</label>
+        <input type="text" id="city" th:field="*{city}" required><br>
+
+        <label for="description">Description:</label>
+        <textarea id="description" th:field="*{description}"></textarea><br>
+
+        <label for="contactInfo">Contact Info:</label>
+        <input type="text" id="contactInfo" th:field="*{contactInfo}"><br>
+
+        <button type="submit">Add Hotel</button>
+    </form>
+
+    <h2>Existing Hotels</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Description</th>
+                <th>Contact Info</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="hotel : ${hotels}">
+                <td th:text="${hotel.id}"></td>
+                <td th:text="${hotel.name}"></td>
+                <td th:text="${hotel.address}"></td>
+                <td th:text="${hotel.city}"></td>
+                <td th:text="${hotel.description}"></td>
+                <td th:text="${hotel.contactInfo}"></td>
+                <td>
+                    <a th:href="@{/admin/hotels/delete/{id}(id=${hotel.id})}">Delete</a>
+                    <!-- Add an edit link/form here later -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html> 
